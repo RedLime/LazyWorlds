@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "lazyworlds",
+  "version": "${version}",
+  "name": "Lazyworlds",
+  "description": "",
+  "authors": [
+    "RedLime"
+  ],
+  "contact": {},
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.redlimerl.lazyworlds.LazyWorlds"
+    ],
+    "speedrunigt": [
+      "com.redlimerl.lazyworlds.config.SpeedRunIGTImpl"
+    ]
+  },
+  "mixins": [
+    "lazyworlds.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.12.0"
+  }
+}
