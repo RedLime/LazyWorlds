@@ -1,6 +1,7 @@
 package com.redlimerl.lazyworlds;
 
 import com.google.common.collect.Lists;
+import com.redlimerl.lazyworlds.config.LazyWorldsConfig;
 import com.redlimerl.lazyworlds.mixin.AccessorLevelStorage;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
@@ -24,14 +25,14 @@ import java.util.concurrent.Executors;
 @Environment(EnvType.CLIENT)
 public class LazyWorlds implements ClientModInitializer {
 
-    private static ExecutorService LOAD_EXECUTOR = null;
+    private static final ExecutorService LOAD_EXECUTOR = Executors.newSingleThreadExecutor();
     private static final CopyOnWriteArrayList<LevelSummary> LEVEL_SUMMARIES = new CopyOnWriteArrayList<>();
     private static int LATEST_WORLD_SIZE = 0;
     private static volatile int INIT_FIRST = 0;
 
     @Override
     public void onInitializeClient() {
-        LOAD_EXECUTOR = Executors.newSingleThreadExecutor();
+        LazyWorldsConfig.init();
     }
 
     public static List<LevelSummary> getLevelList() throws LevelStorageException {
@@ -42,7 +43,7 @@ public class LazyWorlds implements ClientModInitializer {
         }
         String[] levelArray = saveDirectory.toFile().list();
 
-        if (LOAD_EXECUTOR != null && levelArray != null) {
+        if (levelArray != null) {
             int levelSize = levelArray.length;
             if (levelSize == 0) return Lists.newArrayList();
 
